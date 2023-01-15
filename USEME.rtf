@@ -1,0 +1,165 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs28 \cf0 OVERVIEW
+\f1\b0  :\
+\
+MENU BAR is on the top of the GUI. The initial empty box that takes up most of the screen is where the current image will be displayed. \
+\
+The order of image operations is from left to right \'97 create first, saveAll last.\
+\
+To start, click the top left \'93Create\'94 button, and input the number of layers to create as the pop up window suggests.\
+\
+After creating layers, set a current layer to display by clicking on the Current button, input the index of the layer you want to set as current (to be displayed in the image box).\
+At this point, the image box is still empty. \
+\
+Next, load an image by clicking on Load -> Load Image, then select an image to be loaded from the res folder.\
+There is also an option of loading a pre-written script to be parsed into commands. Simply click on Load -> Load Script. The program will run and shut down.\
+After loading an image, the current image will display after a pop up window that confirms the image operation.\
+\
+Below are all types of image operations: \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b \cf0 Type of commands :\
+
+\f1\b0 \
+If a new line of command starts with #, that means it is a comment for the following line of command. \
+\
+
+\f0\b Create
+\f1\b0  - \
+Creates the number of layers following the word \'93create\'94. Create can be called multiple times, where the new number of layers will be added onto the previous number of layers. The command create will ask the user to input again if there is not input after the word \'93create\'94, or if the input is anything other than numeric inputs.\
+\
+Examples : \
+#creates 1 layer\
+create 1 \
+#creates 2 additional layers, now there are 3 layers in total\
+create 2 \
+\
+Counter examples:\
+create sdlijfl\
+create -1\
+\
+\
+
+\f0\b Current
+\f1\b0  - \
+Sets the current layer that image operations will be performed on. Image operations include loading an image, filtering (sepia, greyscale, blur, and sharpen) the current image, saving the current image, and saving all layers of images. These operations cannot be called without first calling \'93current\'94 to set a current layer. \
+Current will ask the user to input again if \
+1) there is not input after the word \'93create\'94, \
+2) the input is anything other than numeric inputs,\
+3) the number that represents the current layer is less or equal to 0\
+4) the layer called on has not been created. \
+\
+Examples :\
+current 1\
+current 2\
+\
+Counter examples:\
+current lskdj\
+create 0\
+\
+\
+
+\f0\b Load
+\f1\b0  - \
+Loads an image onto the current layer. If load has been previously called, calling load again will replace the previous image with the new image. The image cannot be loaded if \
+1) This image does not exist in the res/ folder. \
+2) file type is not .ppm, .png, or .jpeg. \
+3) current layer does not exist.\
+4) current layer is transparent. \
+\
+Examples:\
+load res/bear.ppm\
+load res/sloth.png\
+\
+Counter examples:\
+load bear\
+load 14\
+\
+\
+
+\f0\b Filter
+\f1\b0  - \
+Filters the image with one of the 4 filter operations - sepia, monochrome, blur, sharp. To use filter, type the operation after the word \'93filter\'94. A filter cannot be applied if \
+1) the current layer does not exist\
+2) the current layer has not image\
+3) the current layer is transparent\
+3) there are no inputs after the word \'93filter\'94\
+4) the filter is not one of the four filters listed above\
+\
+Two special types of filter are downsize and mosaic.\
+\
+Downsizing :\
+Input the length and height for the downsized image. The length and height cannot be larger than the original image\'92s length and height\
+\
+Mosaic:\
+Input a seed value that represents the number of sections (of the same color) in the mosaicked image. This number cannot be larger than the number of pixels (length * height) in the original image, since the maximum amount of sections is the amount of pixels. \
+\
+Examples :\
+filter sepia\
+filter blur\
+filter monochrome\
+filter sharp\
+filter mosaic -> 1000\
+filter downsize -> 100 -> 100\
+\
+Counter examples:\
+filter bigger\
+filter\
+\
+
+\f0\b Invisible
+\f1\b0  - \
+If the current layer is visible, the call \'93invisible\'94 sets the current layer invisible.    \
+Invisible cannot be applied if there is no current layer\
+\
+Examples :\
+invisible\
+\
+Counter example:\
+invisible layer 1\
+\
+\
+
+\f0\b Save
+\f1\b0  -\
+Saves the current layer as \cf2 an image\cf0  in the res/ folder. The image format needs to be inputed right after calling \'93save\'94. Layer will not be saved if :\
+1) current layer does not exist\
+2) current layer is transparent\
+3) current layer does not have an image stored\
+4) there is not input after the word \'93save\'94\
+5) the image format that will saved as is not one of \'93ppm\'94, \'93jpeg\'94, or \'93png\'94\
+\
+If a command (the first string of a new line in scanner) is not one of the stated above, the system will ask the user to re-input an existing command. \
+\
+Examples :\
+save ppm\
+save png\
+save jpeg\
+\
+Counter examples:\
+save current\
+save\
+\
+\
+
+\f0\b SaveAll
+\f1\b0  - \
+Saves all the layers in the res/ folder as a folder. The folder\'92s name will be a string of numbers that represents the month, date, hour, minute, second of the time saved (2 digits each, 10 digits total) followed by \'93_imgfolder\'94. Inside of the folder, there is \
+1) a text file named the same string of numbers followed by \'93_layer.txt\'94. If the image is is the Nth layer, then the file would contain \'93Image Layer. N:imageN\'94 followed by the image format. \
+2) n numbers of images that have been loaded and saved, named as \'93imageN\'94, followed by the format of the image saved. \
+\
+Examples :\
+saveAll\
+\
+Counter examples:\
+saveAll 123\
+saveAll layers\
+\
+If the command is not one of the stated above, the program will not respond until a valid command is input. }
